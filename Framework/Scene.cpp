@@ -8,6 +8,10 @@ Scene::Scene(SceneIds id)
 
 void Scene::Init()
 {
+	for (auto obj : objectsToAdd)
+	{
+		obj->Init();
+	}
 	for (auto obj : gameObjects)
 	{
 		obj->Init();
@@ -29,6 +33,10 @@ void Scene::Enter()
 	TEXTURE_MGR.Load(texIds);
 	FONT_MGR.Load(fontIds);
 	SOUNDBUFFER_MGR.Load(soundIds);
+	for (auto obj : objectsToAdd)
+	{
+		obj->Reset();
+	}
 
 	for (auto obj : gameObjects)
 	{
@@ -47,31 +55,55 @@ void Scene::Update(float dt)
 {
 	for (auto obj : gameObjects)
 	{
-		obj->Update(dt);
+		if (obj->GetActive())
+		{
+			obj->Update(dt);
+
+		}
 	}
 }
 
 void Scene::Draw(sf::RenderWindow& window)
 {
-	for (auto obj : gameObjects)
+	std::list<GameObject*> sortedObjects(gameObjects); // 최적화 해보기
+
+	//sortedObjects.sort([](const GameObject* a, const GameObject* b) { return a->sortingOrder < b->sortingOrder; });
+	sortedObjects.sort(DrawOrderCompare());
+
+	for (auto obj : sortedObjects)
 	{
-		obj->Draw(window);
+		if (obj->GetActive())
+		{
+			obj->Draw(window);
+		}
 	}
+	for (GameObject* go : objectsToAdd)
+	{
+		if (std::find(gameObjects.begin(), gameObjects.end(), go) == gameObjects.end())
+		{
+
+			gameObjects.push_back(go);
+		}
+
+	}
+	objectsToAdd.clear();
+	for (GameObject* go : objectsToRemove)
+	{
+		gameObjects.remove(go);
+	}
+	objectsToRemove.clear();
 }
 
 GameObject* Scene::AddGameObject(GameObject* go)
 {
-	if (std::find(gameObjects.begin(), gameObjects.end(), go) == gameObjects.end())
-	{
-		gameObjects.push_back(go);
-		return go;
-	}
-	return nullptr;
+	objectsToAdd.push_back(go);
+	return go;
 }
 
 void Scene::RemoveGameObject(GameObject* go)
 {
-	gameObjects.remove(go);
+	go->SetActive(false);
+	objectsToRemove.push_back(go);
 }
 
 GameObject* Scene::FindGameObject(const std::string& name)

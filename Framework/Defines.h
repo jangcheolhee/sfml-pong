@@ -2,6 +2,14 @@
 
 // Defines.h
 
+enum class SortingLayers
+{
+
+	Default,
+
+
+};
+
 enum class Origins
 {
 	TL, TC, TR,	// 0 1 2
@@ -24,3 +32,4 @@ enum class Sides
 	Right,
 	None,
 };
+
