@@ -31,12 +31,21 @@ void SceneDev1::Update(float dt)
 	{
 		SCENE_MGR.ChangeScene(SceneIds::Dev2);
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
+	if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left))
 	{
+		std::cout << InputMgr::GetMousePostion().x << ", " << InputMgr::GetMousePostion().y << std::endl;
 		textGo->sortingOrder = -1;
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Num2))
+	if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right))
 	{
 		textGo->sortingOrder = 1;
 	}
+	sf::Vector2f dir;
+	dir.x = InputMgr::GetAxisRaw(Axis::Horizontal);
+	dir.y = InputMgr::GetAxisRaw(Axis::Vertical);
+
+	sf::Vector2f pos = textGo->GetPosition();
+	pos += dir * 100.f * dt;
+	textGo->SetPosition(pos);
+
 }
