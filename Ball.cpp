@@ -55,6 +55,10 @@ void Ball::Release()
 
 void Ball::Reset()
 {
+	if (bat2 == nullptr)
+	{
+		bat->SetMode(true);
+	}
 	sf::FloatRect bounds = FRAMEWORK.GetWindowBounds();
 	SetPosition({ bounds.width * 0.5f, bounds.height - 20.f });
 	

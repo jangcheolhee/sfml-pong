@@ -1,37 +1,35 @@
 #include "stdafx.h"
-#include "SceneGame.h"
+#include "SceneGame2.h"
+#include "UiHud.h"
 #include "Bat.h"
 #include "Ball.h"
-#include "UiHud.h"
-
-SceneGame::SceneGame()
+SceneGame2::SceneGame2()
 	:Scene(SceneIds::Game)
 {
 }
 
-SceneGame::~SceneGame()
+SceneGame2::~SceneGame2()
 {
 }
 
-void SceneGame::Init()
+void SceneGame2::Init()
 {
-	
 
-	bat = (Bat*)AddGameObject(new Bat("Bat"));
+	bat1 = (Bat*)AddGameObject(new Bat("Bat"));
+	bat2 = (Bat*)AddGameObject(new Bat("Bat2"));
 	ball = (Ball*)AddGameObject(new Ball("Ball"));
-	ball->SetBat(bat);
+	ball->SetBat(bat1, bat2);
+	
 	fontIds.push_back("fonts/DS-DIGIT.ttf");
 	uiHud = (UiHud*)AddGameObject(new UiHud());
 
 	Scene::Init();
 }
 
-void SceneGame::Enter()
+void SceneGame2::Enter()
 {
 	ballActive = false;
-
-
-
+	
 	Scene::Enter();
 	score = 0;
 
@@ -40,12 +38,12 @@ void SceneGame::Enter()
 	uiHud->SetMessage("Space to Start!");
 }
 
-void SceneGame::Update(float dt)
+void SceneGame2::Update(float dt)
 {
 	Scene::Update(dt);
 	if (!ballActive)
 	{
-		ball->SetPosition(bat->GetPosition());
+		ball->SetPosition(bat1->GetPosition());
 		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 		{
 			uiHud->SetShowMessage(false);
@@ -54,11 +52,5 @@ void SceneGame::Update(float dt)
 			Utils::Normallize(dir);
 			ball->Fire(dir, 500.f);
 		}
-		
 	}
-}
-
-void SceneGame::SetGameOver()
-{
-	SCENE_MGR.ChangeScene(SceneIds::Game);
 }

@@ -40,9 +40,18 @@ void Bat::SetOrigin(Origins preset)
 	Utils::SetOrigin(shape, preset);
 }
 
+
 void Bat::Init()
 {
-	shape.setSize({100.f, 5.f});
+	if (solo)
+	{
+		shape.setSize({100.f, 5.f});
+
+	}
+	else 
+	{
+		shape.setSize({ 5.f, 100.f });
+	}
 	shape.setFillColor(sf::Color::White);
 	SetOrigin(Origins::BC);
 }
@@ -53,19 +62,59 @@ void Bat::Release()
 
 void Bat::Reset()
 {
-	sf::FloatRect bounds = FRAMEWORK.GetWindowBounds();
-	SetPosition({ bounds.width * 0.5f, bounds.height - 20.f });
-	sf::Vector2f size = shape.getSize();
-	minX = bounds.left + size.x * 0.5f;
-	maxX = (bounds.left + bounds.width) - size.x * 0.5f;
+	if (solo)
+	{
+		sf::FloatRect bounds = FRAMEWORK.GetWindowBounds();
+		SetPosition({ bounds.width * 0.5f, bounds.height - 20.f });
+		sf::Vector2f size = shape.getSize();
+		minX = bounds.left + size.x * 0.5f;
+		maxX = (bounds.left + bounds.width) - size.x * 0.5f;
+	}
+	else
+	{
+		if (name == "Bat")
+		{
+			sf::FloatRect bounds = FRAMEWORK.GetWindowBounds();
+			SetPosition({ bounds.width * 0.1f, bounds.height*.5f });
+			sf::Vector2f size = shape.getSize();
+			minY = bounds.top + size.y * 0.5f;
+			maxY = (bounds.top + bounds.height) - size.y * 0.5f;
+		}
+		else
+		{
+			sf::FloatRect bounds = FRAMEWORK.GetWindowBounds();
+			SetPosition({ bounds.width * 0.9f, bounds.height * .5f });
+			sf::Vector2f size = shape.getSize();
+			minY = bounds.top + size.y * 0.5f;
+			maxY = (bounds.top + bounds.height) - size.y * 0.5f;
+		}
+	}
+	
 }
 
 void Bat::Update(float dt)
 {
-	direction.x = InputMgr::GetAxisRaw(Axis::Horizontal);
-	sf::Vector2f pos = GetPosition() + direction * speed * dt;
-	pos.x = Utils::Clamp(pos.x, minX, maxX);
-	SetPosition(pos);
+	if (solo)
+	{
+		direction.x = InputMgr::GetAxisRaw(Axis::Horizontal);
+		sf::Vector2f pos = GetPosition() + direction * speed * dt;
+		pos.x = Utils::Clamp(pos.x, minX, maxX);
+		SetPosition(pos);
+	}
+	else 
+	{
+		if (name == "Bat")
+		{
+			direction.y = InputMgr::GetAxisRaw(Axis::Vertical);
+		}
+		else
+		{
+			direction.y = InputMgr::GetAxisRaw(Axis::Vertical2);
+		}
+		sf::Vector2f pos = GetPosition() + direction * speed * dt;
+		pos.y = Utils::Clamp(pos.y, minY, maxY);
+		SetPosition(pos);
+	}
 }
 
 void Bat::Draw(sf::RenderWindow& window)

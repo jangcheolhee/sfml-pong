@@ -7,7 +7,7 @@ class Ball : public GameObject
 {
 protected:
     Bat* bat = nullptr;
-
+    Bat* bat2 = nullptr;
     sf::CircleShape cir;
 
     sf::Vector2f direction;
@@ -38,5 +38,6 @@ public:
 
     void Fire(const sf::Vector2f& d, float s);
     void SetBat(Bat* bat) { this->bat = bat; }
+    void SetBat(Bat* bat, Bat* bat2) { this->bat = bat; this->bat2 = bat2; }
 };
 
