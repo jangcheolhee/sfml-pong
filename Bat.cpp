@@ -43,17 +43,7 @@ void Bat::SetOrigin(Origins preset)
 
 void Bat::Init()
 {
-	if (solo)
-	{
-		shape.setSize({100.f, 5.f});
-
-	}
-	else 
-	{
-		shape.setSize({ 5.f, 100.f });
-	}
-	shape.setFillColor(sf::Color::White);
-	SetOrigin(Origins::BC);
+	
 }
 
 void Bat::Release()
@@ -64,6 +54,9 @@ void Bat::Reset()
 {
 	if (solo)
 	{
+		shape.setSize({ 100.f, 5.f });
+		shape.setFillColor(sf::Color::White);
+		SetOrigin(Origins::BC);
 		sf::FloatRect bounds = FRAMEWORK.GetWindowBounds();
 		SetPosition({ bounds.width * 0.5f, bounds.height - 20.f });
 		sf::Vector2f size = shape.getSize();
@@ -72,6 +65,10 @@ void Bat::Reset()
 	}
 	else
 	{
+		shape.setSize({ 5.f, 100.f });
+
+		shape.setFillColor(sf::Color::White);
+		SetOrigin(Origins::BC);
 		if (name == "Bat")
 		{
 			sf::FloatRect bounds = FRAMEWORK.GetWindowBounds();
