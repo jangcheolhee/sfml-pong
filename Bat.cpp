@@ -78,7 +78,7 @@ void Bat::Reset()
 			SetPosition({ bounds.width * 0.1f, bounds.height*.5f });
 			sf::Vector2f size = shape.getSize();
 			minY = bounds.top + size.y * 0.5f;
-			maxY = (bounds.top + bounds.height) - size.y * 0.5f;
+			maxY = (bounds.top + bounds.height) + size.y * 0.5f;
 		}
 		else
 		{
@@ -86,7 +86,7 @@ void Bat::Reset()
 			SetPosition({ bounds.width * 0.9f, bounds.height * .5f });
 			sf::Vector2f size = shape.getSize();
 			minY = bounds.top + size.y * 0.5f;
-			maxY = (bounds.top + bounds.height) - size.y * 0.5f;
+			maxY = (bounds.top + bounds.height) + size.y * 0.5f;
 		}
 	}
 	

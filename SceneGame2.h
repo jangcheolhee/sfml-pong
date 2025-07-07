@@ -8,12 +8,14 @@ class Ball;
 class SceneGame2 : public Scene
 {
 protected:
+	bool turn = true;
 	UiHud* uiHud;
 	Ball* ball;
 	Bat* bat1;
 	Bat* bat2;
 
-	int score = 0;
+	int score1 = 0;
+	int score2 = 0;
 
 	bool ballActive = true;
 public:

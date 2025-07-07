@@ -12,6 +12,7 @@ protected:
     float minY;
     float maxY;
     bool solo = false;
+    int score = 0;
 public:
     Bat(const std::string& name);
     ~Bat() override;
@@ -22,6 +23,8 @@ public:
     void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
     void SetMode(bool mode) { solo = mode; }
+    void SetScore() { score++; }
+    int GetScore() const { return score; }
 
     void Init() override;
     void Release() override;

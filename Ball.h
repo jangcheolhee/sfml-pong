@@ -2,7 +2,7 @@
 #include "GameObject.h"
 class Bat;
 class SceneGame;
-
+class SceneGame2;
 class Ball : public GameObject
 {
 protected:
@@ -19,6 +19,8 @@ protected:
     float maxY=0.f;
 
     SceneGame* scene;
+    SceneGame2* scene2;
+    
 
 public:
     Ball(const std::string& name);
@@ -29,6 +31,7 @@ public:
     void SetScale(const sf::Vector2f& s) override;
     void SetOrigin(const sf::Vector2f& o) override;
     void SetOrigin(Origins preset) override;
+    std::string GetScore();
 
     void Init() override;
     void Release() override;

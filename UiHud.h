@@ -14,6 +14,7 @@ public:
 	~UiHud() override = default;
 	//
 	void SetScore(int score);
+	void SetScore(int score1, int score2);
 	void SetScorePosition(const sf::Vector2f pos);
 	void SetScoreSize(int size);
 	void SetMessage(const std::string& msg);

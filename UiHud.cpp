@@ -12,6 +12,13 @@ void UiHud::SetScore(int score)
 	textScore.setString(formatScore + std::to_string(score));
 	Utils::SetOrigin(textScore, Origins::TL);
 }
+void UiHud::SetScore(int score1, int score2)
+{
+	
+	textScore.setString(std::to_string(score1) + " : " + std::to_string(score2));
+	Utils::SetOrigin(textScore, Origins::MC);
+	textScore.setPosition({ 640,100 });
+}
 
 void UiHud::SetScorePosition(const sf::Vector2f pos)
 {
