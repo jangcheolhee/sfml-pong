@@ -17,11 +17,13 @@ void SceneDev1::Init()
 	go->SetFillColor(sf::Color::White);
 	AddGameObject(go);
 
-	textGo = new TextGo("fonts/DS-DIGIT.ttf");
-	textGo->SetString("Dev 1");
-	textGo->SetCharacterSize(30);
-	textGo->SetFillColor(sf::Color::Red);
-	AddGameObject(textGo);
+
+	testGo = new TextGo("fonts/DS-DIGIT.ttf");
+	testGo->SetString("Dev 1");
+	testGo->SetCharacterSize(30);
+	testGo->SetFillColor(sf::Color::Red);
+	AddGameObject(testGo);
+
 	Scene::Init();
 }
 
@@ -31,21 +33,40 @@ void SceneDev1::Update(float dt)
 	{
 		SCENE_MGR.ChangeScene(SceneIds::Dev2);
 	}
-	if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Left))
+	if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
 	{
-		std::cout << InputMgr::GetMousePostion().x << ", " << InputMgr::GetMousePostion().y << std::endl;
-		textGo->sortingOrder = -1;
+		testGo->sortingOrder = -1;
 	}
-	if (InputMgr::GetMouseButtonDown(sf::Mouse::Button::Right))
+	if (InputMgr::GetKeyDown(sf::Keyboard::Num2))
 	{
-		textGo->sortingOrder = 1;
+		testGo->sortingOrder = 1;
 	}
-	sf::Vector2f dir;
-	dir.x = InputMgr::GetAxisRaw(Axis::Horizontal);
-	dir.y = InputMgr::GetAxisRaw(Axis::Vertical);
 
-	sf::Vector2f pos = textGo->GetPosition();
-	pos += dir * 100.f * dt;
-	textGo->SetPosition(pos);
+	//sf::Vector2f dir;
+	//dir.x = InputMgr::GetAxis(Axis::Horizontal);
+	//dir.y = InputMgr::GetAxis(Axis::Vertical);
+
+	//std::cout << InputMgr::GetAxis(Axis::Horizontal) << std::endl;
+
+	//sf::Vector2f pos = testGo->GetPosition();
+	//pos += dir * 100.f * dt;
+	//testGo->SetPosition(pos);
+
+	if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+	{
+		std::cout << "ad" << std::endl;
+	}
+
+
+	if (InputMgr::GetMouseButtonUp(sf::Mouse::Left))
+	{
+		std::cout << "cd" << std::endl;
+	}
+
+
+	if (InputMgr::GetMouseButton(sf::Mouse::Left))
+	{
+		std::cout << "d" << std::endl;
+	}
 
 }

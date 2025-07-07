@@ -1,18 +1,19 @@
 #pragma once
-enum class Axis 
+
+enum class Axis
 {
 	Horizontal,
 	Vertical,
 };
+
 struct AxisInfo
 {
 	Axis axis;
-	std::list <int> positives;
-	std::list <int> negatives;
+	std::list<int> positivies; // 1.f;
+	std::list<int> negatives; // -1.f; 음수 출력 ex)좌
 
-	float sinsi = 10.f;
-	float value = 0.f;
-
+	float sensi = 1.f; // 증가 속도 / 감소 속도
+	float value = 0.f; // 최대 증가 속도 / 최대 감소 속도
 
 };
 
@@ -23,12 +24,7 @@ private:
 	static std::list<int> heldKeys;
 	static std::list<int> upKeys;
 
-	//static sf::Mouse::Button downBtn;
-	//static sf::Mouse::Button upBtn;
-	//static sf::Mouse::Button heldBtn;
-
 	static std::unordered_map<Axis, AxisInfo> axisInfoMap;
-
 
 public:
 	static void Init();
@@ -41,18 +37,19 @@ public:
 	static bool GetKeyUp(sf::Keyboard::Key key);
 	static bool GetKey(sf::Keyboard::Key key);
 
-	static bool Contains(const std::list<int>& list, int code);
-	static void Remove(std::list<int>& list, int code);
+	static bool Contains(const std::list<int>& list, int key);
+	static void Remove(std::list<int>& list, int key);
 
-	static float GetAxisRaw(Axis axis);
-	static float GetAxis(Axis axis);
+	static float GetAxisRaw(Axis axis); // sensi
+	static float GetAxis(Axis axis); //value
+	
+	//숙제
+	static bool GetMouseButtonDown(sf::Mouse::Button button);
+	static bool GetMouseButtonUp(sf::Mouse::Button button);
+	static bool GetMouseButton(sf::Mouse::Button button);
 
-	static bool GetMouseButtonDown(sf::Mouse::Button btn);
-	static bool GetMouseButtonUp(sf::Mouse::Button btn);
-	static bool GetMouseButton(sf::Mouse::Button btn);
-	static int GetMouse(sf::Mouse::Button btn) { return btn + sf::Keyboard::KeyCount; }
 
-	static sf::Vector2i GetMousePostion();
+	static sf::Vector2i GetMouseButton();
+
 };
-
 

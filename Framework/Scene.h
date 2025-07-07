@@ -4,9 +4,9 @@ class Scene
 {
 protected:
 	std::list<GameObject*> gameObjects;
+
 	std::list<GameObject*> objectsToAdd;
 	std::list<GameObject*> objectsToRemove;
-
 
 	std::vector<std::string> texIds;
 	std::vector<std::string> fontIds;
@@ -33,9 +33,9 @@ public:
 	GameObject* FindGameObject(const std::string& name);
 };
 
-struct DrawOrderCompare
+struct DrawOrderComparer
 {
-	bool operator() (const GameObject* a, const GameObject* b)
+	bool operator()(const GameObject* a, const GameObject* b)
 	{
 		if (a->sortingLayer != b->sortingLayer)
 		{

@@ -8,11 +8,11 @@ Scene::Scene(SceneIds id)
 
 void Scene::Init()
 {
-	for (auto obj : objectsToAdd)
+	for (auto obj : gameObjects)
 	{
 		obj->Init();
 	}
-	for (auto obj : gameObjects)
+	for (auto obj : objectsToAdd)
 	{
 		obj->Init();
 	}
@@ -33,12 +33,13 @@ void Scene::Enter()
 	TEXTURE_MGR.Load(texIds);
 	FONT_MGR.Load(fontIds);
 	SOUNDBUFFER_MGR.Load(soundIds);
-	for (auto obj : objectsToAdd)
+
+	for (auto obj : gameObjects)
 	{
 		obj->Reset();
 	}
 
-	for (auto obj : gameObjects)
+	for (auto obj : objectsToAdd)
 	{
 		obj->Reset();
 	}
@@ -58,17 +59,28 @@ void Scene::Update(float dt)
 		if (obj->GetActive())
 		{
 			obj->Update(dt);
-
 		}
 	}
 }
 
 void Scene::Draw(sf::RenderWindow& window)
 {
-	std::list<GameObject*> sortedObjects(gameObjects); // 최적화 해보기
+	//얕은 복사
+	std::list<GameObject*> sortedObjects(gameObjects);
 
-	//sortedObjects.sort([](const GameObject* a, const GameObject* b) { return a->sortingOrder < b->sortingOrder; });
-	sortedObjects.sort(DrawOrderCompare());
+	// a > b 정수 기준 오름차순
+	// bool (a, b)
+	// return a > b;
+
+	/*sortedObjects.sort([]
+	(const GameObject* a, const GameObject* b)
+		{
+			return a->sortingOrder < b->sortingOrder;
+		}
+	);*/
+
+	sortedObjects.sort(DrawOrderComparer());
+
 
 	for (auto obj : sortedObjects)
 	{
@@ -77,16 +89,18 @@ void Scene::Draw(sf::RenderWindow& window)
 			obj->Draw(window);
 		}
 	}
+
+
 	for (GameObject* go : objectsToAdd)
 	{
-		if (std::find(gameObjects.begin(), gameObjects.end(), go) == gameObjects.end())
+		if (std::find(gameObjects.begin(), gameObjects.end(), go) ==
+			gameObjects.end())
 		{
-
 			gameObjects.push_back(go);
 		}
-
 	}
 	objectsToAdd.clear();
+
 	for (GameObject* go : objectsToRemove)
 	{
 		gameObjects.remove(go);

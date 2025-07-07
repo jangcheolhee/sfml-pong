@@ -1,15 +1,13 @@
 #pragma once
 
 // Defines.h
-
 enum class SortingLayers
 {
-
+	//Background,
+	//Character,
 	Default,
-
-
+	//VFX
 };
-
 enum class Origins
 {
 	TL, TC, TR,	// 0 1 2
@@ -21,6 +19,7 @@ enum class Origins
 enum class SceneIds
 {
 	None = -1,
+	Game,
 	Dev1,
 	Dev2,
 	Count,

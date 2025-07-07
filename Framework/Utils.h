@@ -20,6 +20,28 @@ public:
 	static sf::Vector2f SetOrigin(sf::Shape& obj, Origins preset);
 	static sf::Vector2f SetOrigin(sf::Text& obj, Origins preset);
 	static sf::Vector2f SetOrigin(sf::Sprite& obj, Origins preset);
+
+	//Math
+	static float Clamp(float value, float min, float max); // Clamp(v, 0.f, 1,f)
+	static float Clamp01(float value);
+	
+	//vector 크기
+	static float Magnitude(const sf::Vector2f& vec);
+	static float SqrMagnitude(const sf::Vector2f& vec);
+	
+	//vector 방향 정규화(normallize)
+	static sf::Vector2f GetNormal(const sf::Vector2f& vec);
+	static void Normallize(const sf::Vector2f& vec);
+	
+	//두 점사이의 거리
+	static float Distance(const sf::Vector2f& p1, const sf::Vector2f& p2);
+
+	//선형보간
+	static float Lerp(float min, float max, float t, bool clamp = true);
+	static sf::Vector2f Lerp(const sf::Vector2f& min, const sf::Vector2f& max, float t, bool clamp = true);
+	static sf::Color Lerp(const sf::Color& min,const sf::Color& max, float t, bool clamp = true);
+
 };
+
 
 
